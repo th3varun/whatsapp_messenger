@@ -6,12 +6,13 @@ import 'package:whatsapp_messenger/common/utils/coloors.dart';
 ThemeData darkTheme() {
   final ThemeData base = ThemeData.dark();
   return base.copyWith(
-    dialogBackgroundColor: Coloors.backgroundDark,
+    //backgroundColor: Coloors.backgroundDark,
     scaffoldBackgroundColor: Coloors.backgroundDark,
     extensions: [
       CustomThemeExtension.darkMode,
     ],
     appBarTheme: const AppBarTheme(
+      titleTextStyle: TextStyle(fontSize: 18),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.light,
@@ -33,6 +34,12 @@ ThemeData darkTheme() {
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
+      ),
+    ),
+    dialogBackgroundColor: Coloors.greyBackground,
+    dialogTheme: DialogTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
     ),
   );
