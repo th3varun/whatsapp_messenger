@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_messenger/common/extension/custom_theme_extension.dart';
 import 'package:whatsapp_messenger/common/widgets/custom_icon_button.dart';
+import 'package:whatsapp_messenger/feature/auth/controller/auth_controller.dart';
 import 'package:whatsapp_messenger/feature/auth/widgets/custom_text_field.dart';
 
-class VerificationPage extends StatefulWidget {
-  const VerificationPage({super.key});
+class VerificationPage extends ConsumerWidget {
+  const VerificationPage({
+    super.key,
+    required this.smsCodeId,
+    required this.phoneNumber,
+  });
 
-  @override
-  State<VerificationPage> createState() => _VerificationPageState();
-}
+  final String smsCodeId;
+  final String phoneNumber;
 
-class _VerificationPageState extends State<VerificationPage> {
-  late TextEditingController codeController;
-
-  @override
-  void initState() {
-    codeController = TextEditingController();
-    super.initState();
+  void verifySmsCode(
+    BuildContext context,
+    WidgetRef ref,
+    String smsCode,
+  ) {
+    ref.read(authControllerProvider).verifySmsCode(
+          context: context,
+          smsCodeId: smsCodeId,
+          smsCode: smsCode,
+          mounted: true,
+        );
   }
 
   @override
-  void dispose() {
-    codeController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -76,13 +79,15 @@ class _VerificationPageState extends State<VerificationPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 80),
               child: CustomTextField(
-                controller: codeController,
                 hintText: '- - -  - - -',
                 fontSize: 30,
                 autoFocus: true,
                 keyboardType: TextInputType.number,
-                inChanged:
-                    (value) {}, // yaha pe onchanged anna chaiye inchanged ki jagah
+                inChanged: (value) {
+                  if (value.length == 6) {
+                    return verifySmsCode(context, ref, value);
+                  }
+                }, // yaha pe onchanged anna chaiye inchanged ki jagah
               ),
             ),
             const SizedBox(height: 20),
