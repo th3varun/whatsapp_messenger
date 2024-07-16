@@ -42,6 +42,9 @@ dependencies:
   cloud_firestore: ^5.0.2
   firebase_storage: ^12.1.0
   flutter_riverpod: ^2.0.0-dev.9
+  image_picker: ^1.1.2
+  photo_manager: ^3.2.0
+  font_awesome_flutter: ^10.7.0
 
 flutter_native_splash:
   color: "#FFFFFF"
@@ -67,7 +70,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
