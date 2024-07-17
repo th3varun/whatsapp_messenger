@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_messenger/common/widgets/custom_icon_button.dart';
-import 'package:whatsapp_messenger/feature/auth/home/chat_home_page.dart';
-import 'package:whatsapp_messenger/feature/auth/home/pages/call_home_page.dart';
-import 'package:whatsapp_messenger/feature/auth/home/pages/status_home_page.dart';
+import 'package:whatsapp_messenger/feature/home/pages/chat_home_page.dart';
+import 'package:whatsapp_messenger/feature/home/pages/call_home_page.dart';
+import 'package:whatsapp_messenger/feature/home/pages/status_home_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

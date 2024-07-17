@@ -5,7 +5,7 @@ import 'package:whatsapp_messenger/common/routes/routes.dart';
 import 'package:whatsapp_messenger/common/theme/dark_theme.dart';
 import 'package:whatsapp_messenger/common/theme/light_theme.dart';
 import 'package:whatsapp_messenger/feature/auth/controller/auth_controller.dart';
-import 'package:whatsapp_messenger/feature/auth/home/pages/home_page.dart';
+import 'package:whatsapp_messenger/feature/home/pages/home_page.dart';
 import 'package:whatsapp_messenger/feature/welcome/pages/welcome_page.dart';
 import 'package:whatsapp_messenger/firebase_options.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
