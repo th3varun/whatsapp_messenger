@@ -22,7 +22,7 @@ class ContactsRepository {
 
     try {
       if (await FlutterContacts.requestPermission()) {
-        final userConllection = await firestore.collection('users').get();
+        final userCollection = await firestore.collection('users').get();
         final allContactsInThePhone = await FlutterContacts.getContacts(
           withProperties: true,
         );
@@ -30,9 +30,9 @@ class ContactsRepository {
         bool isContactFound = false;
 
         for (var contact in allContactsInThePhone) {
-          for (var firebaseContactData in userConllection.docs) {
+          for (var firebaseContactData in userCollection.docs) {
             var firebaseContact = UserModel.fromMap(firebaseContactData.data());
-            if (contact.phones[0].number.replaceAll('', '') ==
+            if (contact.phones[0].number.replaceAll(' ', '') ==
                 firebaseContact.phoneNumber) {
               firebaseContacts.add(firebaseContact);
               isContactFound = true;
