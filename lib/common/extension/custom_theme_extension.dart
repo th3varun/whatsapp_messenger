@@ -17,6 +17,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     authAppbarTextColor: Coloors.greenLight,
     photoIconBgColor: Color(0xFFF0F2F3),
     photoIconColor: Color(0xFF9DAAB3),
+    profilePageBg: Color(0xFFF7F8FA),
+    chatTextFieldBg: Colors.white,
   );
   static const darkMode = CustomThemeExtension(
     circleImageColor: Coloors.greenDark,
@@ -27,6 +29,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     authAppbarTextColor: Color(0xFFE9EDEF),
     photoIconBgColor: Color(0xFF283339),
     photoIconColor: Color(0xFF61717B),
+    profilePageBg: Color(0xFF0B141A),
+    chatTextFieldBg: Coloors.greyBackground,
   );
   final Color? circleImageColor;
   final Color? greyColor;
@@ -36,6 +40,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   final Color? authAppbarTextColor;
   final Color? photoIconBgColor;
   final Color? photoIconColor;
+  final Color? profilePageBg;
+  final Color? chatTextFieldBg;
 
   const CustomThemeExtension({
     this.circleImageColor,
@@ -46,6 +52,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     this.authAppbarTextColor,
     this.photoIconBgColor,
     this.photoIconColor,
+    this.profilePageBg,
+    this.chatTextFieldBg,
   });
   @override
   ThemeExtension<CustomThemeExtension> copyWith({
@@ -57,6 +65,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     Color? authAppbarTextColor,
     Color? photoIconBgColor,
     Color? photoIconColor,
+    Color? profilePageBg,
+    Color? chatTextFieldBg,
   }) {
     return CustomThemeExtension(
       circleImageColor: circleImageColor ?? this.circleImageColor,
@@ -65,6 +75,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
       langBtnBgColor: langBtnBgColor ?? this.langBtnBgColor,
       photoIconBgColor: photoIconBgColor ?? this.photoIconBgColor,
       photoIconColor: photoIconColor ?? this.photoIconColor,
+      profilePageBg: profilePageBg ?? this.profilePageBg,
+      chatTextFieldBg: chatTextFieldBg ?? this.chatTextFieldBg,
       authAppbarTextColor: authAppbarTextColor ?? this.authAppbarTextColor,
       langBtnHighlightColor:
           langBtnHighlightColor ?? this.langBtnHighlightColor,
@@ -82,6 +94,8 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
       langBtnBgColor: Color.lerp(langBtnBgColor, other.langBtnBgColor, t),
       photoIconBgColor: Color.lerp(photoIconBgColor, other.photoIconBgColor, t),
       photoIconColor: Color.lerp(photoIconColor, other.photoIconColor, t),
+      profilePageBg: Color.lerp(profilePageBg, other.profilePageBg, t),
+      chatTextFieldBg: Color.lerp(chatTextFieldBg, other.chatTextFieldBg, t),
       authAppbarTextColor:
           Color.lerp(authAppbarTextColor, other.authAppbarTextColor, t),
       langBtnHighlightColor:

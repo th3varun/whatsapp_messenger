@@ -1,1 +1,41 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"whatsapp-messenger-7b4d7","appId":"1:1043594360417:android:efe2b4215324e069e45c20","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"whatsapp-messenger-7b4d7","configurations":{"android":"1:1043594360417:android:efe2b4215324e069e45c20","ios":"1:1043594360417:ios:10a14400533700b9e45c20"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "whatsapp-messenger-7b4d7",
+          "appId": "1:1043594360417:android:efe2b4215324e069e45c20",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "whatsapp-messenger-7b4d7",
+          "configurations": {
+            "android": "1:1043594360417:android:efe2b4215324e069e45c20",
+            "ios": "1:1043594360417:ios:10a14400533700b9e45c20"
+          }
+        }
+      }
+    }
+  },
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"%RESOURCE_DIR%\" run lint"
+      ]
+    }
+  ]
+}
