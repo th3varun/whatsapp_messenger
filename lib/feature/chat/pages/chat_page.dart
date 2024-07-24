@@ -1,23 +1,38 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custom_clippers/custom_clippers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:whatsapp_messenger/common/extension/custom_theme_extension.dart';
+import 'package:whatsapp_messenger/common/helper/last_seen_message.dart';
 import 'package:whatsapp_messenger/common/models/user_model.dart';
 import 'package:whatsapp_messenger/common/routes/routes.dart';
 import 'package:whatsapp_messenger/common/widgets/custom_icon_button.dart';
+import 'package:whatsapp_messenger/feature/auth/controller/auth_controller.dart';
+import 'package:whatsapp_messenger/feature/chat/controller/chat_controller.dart';
 import 'package:whatsapp_messenger/feature/chat/widgets/chat_text_field.dart';
+import 'package:whatsapp_messenger/feature/chat/widgets/message_card.dart';
+import 'package:whatsapp_messenger/feature/chat/widgets/yellow_card.dart';
 
-class ChatPage extends StatelessWidget {
-  const ChatPage({super.key, required this.user});
+final pageStorageBucket = PageStorageBucket();
+
+class ChatPage extends ConsumerWidget {
+  ChatPage({super.key, required this.user});
 
   final UserModel user;
+  final ScrollController scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: context.theme.chatPageBgColor,
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            Navigator.of(context).pop();
+            Navigator.pop(context);
           },
           borderRadius: BorderRadius.circular(20),
           child: Row(
@@ -56,7 +71,7 @@ class ChatPage extends StatelessWidget {
                   style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 const SizedBox(height: 3),
-                /*  StreamBuilder(
+                StreamBuilder(
                   stream: ref
                       .read(authControllerProvider)
                       .getUserPresenceStatus(uid: user.uid),
@@ -70,12 +85,12 @@ class ChatPage extends StatelessWidget {
                         ),
                       );
                     }
-            
+
                     final singleUserModel = snapshot.data!;
-            
-                    final lastMessage = lastSeenMessage(
-                        singleUserModel); //final lastMessage = lastSeenMessage(singleUserModel.lastSeen); Aisa anna hai idher!
-            
+
+                    final lastMessage =
+                        lastSeenMessage(singleUserModel.lastSeen);
+
                     return Text(
                       singleUserModel.active ? "Online" : "$lastMessage ago",
                       style: const TextStyle(
@@ -84,7 +99,7 @@ class ChatPage extends StatelessWidget {
                       ),
                     );
                   },
-                ), */
+                ),
               ],
             ),
           ),
@@ -114,15 +129,105 @@ class ChatPage extends StatelessWidget {
             width: double.maxFinite,
             image: const AssetImage('assets/images/doodle_bg.png'),
             fit: BoxFit.cover,
-            color: context.theme.photoIconBgColor,
+            color: context.theme.chatPageDoodleColor,
           ),
-          Column(
-            children: [
-              Expanded(
-                child: Container(),
-              ),
-              ChatTextField(receiverId: user.uid),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(bottom: 60),
+            child: StreamBuilder(
+              stream: ref
+                  .watch(chatControllerProvider)
+                  .getAllOneToOneMessage(user.uid),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.active) {
+                  return ListView.builder(
+                    itemCount: 15,
+                    itemBuilder: (_, index) {
+                      final random = Random().nextInt(14);
+                      return Container(
+                        alignment: random.isEven
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        margin: EdgeInsets.only(
+                          top: 5,
+                          bottom: 5,
+                          left: random.isEven ? 150 : 15,
+                          right: random.isEven ? 15 : 150,
+                        ),
+                        child: ClipPath(
+                          clipper: UpperNipMessageClipperTwo(
+                            random.isEven
+                                ? MessageType.send
+                                : MessageType.receive,
+                            nipWidth: 8,
+                            nipHeight: 10,
+                            bubbleRadius: 12,
+                          ),
+                          child: Shimmer.fromColors(
+                            baseColor: random.isEven
+                                ? context.theme.greyColor!.withOpacity(.3)
+                                : context.theme.greyColor!.withOpacity(.2),
+                            highlightColor: random.isEven
+                                ? context.theme.greyColor!.withOpacity(.4)
+                                : context.theme.greyColor!.withOpacity(.3),
+                            child: Container(
+                              height: 40,
+                              width:
+                                  170 + double.parse((random * 2).toString()),
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+                return PageStorage(
+                  bucket: pageStorageBucket,
+                  child: ListView.builder(
+                    key: const PageStorageKey('chat_page_list'),
+                    itemCount: snapshot.data!.length,
+                    shrinkWrap: true,
+                    controller: scrollController,
+                    itemBuilder: (_, index) {
+                      final message = snapshot.data![index];
+                      final isSender = message.senderId ==
+                          FirebaseAuth.instance.currentUser!.uid;
+
+                      final haveNip = (index == 0) ||
+                          (index == snapshot.data!.length - 1 &&
+                              message.senderId !=
+                                  snapshot.data![index - 1].senderId) ||
+                          (message.senderId !=
+                                  snapshot.data![index - 1].senderId &&
+                              message.senderId ==
+                                  snapshot.data![index + 1].senderId) ||
+                          (message.senderId !=
+                                  snapshot.data![index - 1].senderId &&
+                              message.senderId !=
+                                  snapshot.data![index + 1].senderId);
+
+                      return Column(
+                        children: [
+                          if (index == 0) YellowCard(),
+                          MessageCard(
+                            isSender: isSender,
+                            haveNip: haveNip,
+                            message: message,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          Container(
+            alignment: const Alignment(0, 1),
+            child: ChatTextField(
+              receiverId: user.uid,
+              scrollController: scrollController,
+            ),
           ),
         ],
       ),

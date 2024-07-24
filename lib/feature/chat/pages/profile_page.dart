@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_messenger/common/extension/custom_theme_extension.dart';
-import 'package:whatsapp_messenger/common/helper/last_seen_message.dart';
+//import 'package:whatsapp_messenger/common/helper/last_seen_message.dart';
 import 'package:whatsapp_messenger/common/models/user_model.dart';
 import 'package:whatsapp_messenger/common/utils/coloors.dart';
 import 'package:whatsapp_messenger/common/widgets/custom_icon_button.dart';
@@ -42,7 +42,8 @@ class ProfilePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "last seen ${lastSeenMessage(user.lastSeen)} ago",
+                        "last seen few minutes ago",
+                        //"last seen ${lastSeenMessage(user.lastSeen)} ago",
                         style: TextStyle(color: context.theme.greyColor),
                       ),
                       Row(
