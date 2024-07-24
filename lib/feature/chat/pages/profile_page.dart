@@ -42,7 +42,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "last seen few minutes ago",
+                        "last seen 1 minute ago",
                         //"last seen ${lastSeenMessage(user.lastSeen)} ago",
                         style: TextStyle(color: context.theme.greyColor),
                       ),
