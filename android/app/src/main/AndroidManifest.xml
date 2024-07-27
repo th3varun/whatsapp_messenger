@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
-        android:label="WhatsApp_Messenger"
+        android:label="Whatsapp Clone"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         >
