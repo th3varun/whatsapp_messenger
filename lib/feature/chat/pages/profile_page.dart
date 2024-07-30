@@ -38,7 +38,9 @@ class ProfilePage extends StatelessWidget {
                       Text(
                         user.phoneNumber,
                         style: TextStyle(
-                            fontSize: 20, color: context.theme.greyColor),
+                          fontSize: 20,
+                          color: context.theme.greyColor,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Text(
